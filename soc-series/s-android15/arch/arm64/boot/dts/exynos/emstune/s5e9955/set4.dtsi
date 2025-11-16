@@ -1,0 +1,62 @@
+/ {
+	/* balance mode - default */
+	set4: set@400 {
+		/* Ontime Migration */
+		ontime {
+			top-app		= <1>;
+			foreground	= <1>;
+
+			domain0 {
+				cpus = CPU_CL0;
+				lower-boundary = <0>;
+				upper-boundary = <31>;
+			};
+			domain1 {
+				cpus = CPU_CL1L;
+				lower-boundary = <8>;
+				upper-boundary = <66>;
+			};
+			domain2 {
+				cpus = CPU_CL1H;
+				lower-boundary = <8>;
+				upper-boundary = <66>;
+			};
+			domain3 {
+				cpus = CPU_CL2;
+				lower-boundary = <43>;
+				upper-boundary = <100>;
+			};
+		};
+
+		ecs_dynamic {
+			dynamic-busy-ratio		= <70 70 70 70>;
+			min-cpus = "0-3";
+		};
+
+		fclamp {
+			max-freq          = < 1152000       0      0 2515000>;
+			max-target-period = <       4       0      0       4>;
+			max-target-ratio  = <      80       0      0      80>;
+
+			monitor-group {
+				top-app         = <1>;
+				foreground      = <1>;
+			};
+		};
+
+		util_est {
+			top-app	= <1>;
+		};
+
+		dsu_slice_down {
+			enabled = <1>;
+		};
+
+		dslt {
+			running-sensitivity {
+				background = <95>;
+				system-background = <95>;
+			};
+		};
+	};
+};
