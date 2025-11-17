@@ -170,6 +170,12 @@ def get_all_vendor_boot_modules_list(variant = None):
     modules_list += _EXTERNAL_MODULE_LIST
     modules_list += model_variant_common_kernel_module_list
     modules_list += model_variant_external_module_list
+    # Move all vendor_dlkm modules into vendor_boot for easier flashing
+    modules_list += _COMMON_KERNEL_VENDOR_DLKM_MODULE_LIST
+    modules_list += get_soc_vendor_dlkm_modules_list(variant)
+    modules_list += get_mx8855_vendor_dlkm_modules_list(variant)
+    modules_list += _EXTERNAL_MODULE_IN_DLKM_LIST
+    modules_list += model_variant_external_dlkm_module_list
     return modules_list
 
 def get_all_system_dlkm_blocklist():
@@ -194,13 +200,10 @@ def get_all_kunit_test_list(variant = None):
     return modules_list
 
 # All modules included in soc_vendor_dlkm
+# NOTE: Disabled - all modules moved to vendor_boot for easier flashing
 def get_all_vendor_dlkm_modules_list(variant = None):
     modules_list = []
-    modules_list += _COMMON_KERNEL_VENDOR_DLKM_MODULE_LIST
-    modules_list += get_soc_vendor_dlkm_modules_list(variant)
-    modules_list += get_mx8855_vendor_dlkm_modules_list(variant)
-    modules_list += _EXTERNAL_MODULE_IN_DLKM_LIST
-    modules_list += model_variant_external_dlkm_module_list
+    # Return empty list - everything is now in vendor_boot
     return modules_list
 
 # All modules built from this directory
